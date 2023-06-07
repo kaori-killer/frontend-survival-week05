@@ -26,6 +26,7 @@ export default function App() {
 
   useInterval(() => {
     if (receipt.id) {
+      // 5초 후에 실행
       setReceipt(emptyReceipt);
     }
   }, receipt.id ? 5000 : null);

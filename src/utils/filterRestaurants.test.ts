@@ -2,30 +2,93 @@ import fixtures from '../../fixtures';
 
 import filterRestaurants from './filterRestaurants';
 
-import foods from '../../fixtures/foods';
+import restaurants from '../../fixtures/restaurants';
 
 const context = describe;
 
 describe('filterRestaurants', () => {
-  context('레스토랑 데이터, filterText == "메가", filterCategory = "중식" 이 들어왔을 때', () => {
-    it('이름에 메를 포함하고, 카데고리가 중식인 레스토랑 객체를 포함한 배열을 리턴한다.', () => {
-      const filterText = '메';
-      const filterCategory = '중식';
-      const expectedFilteredRestaurants = [
-        {
-          id: 'RESTAURANT_01',
-          category: '중식',
-          name: '메가반점',
-          menu: [...foods],
-        },
-      ];
+  context('text = “”, category=”전체”', () => {
+    it('전체 레스토랑 객체를 포함한 배열을 반환한다', () => {
+      const text = '';
+      const category = '전체';
 
       const filteredRestaurants = filterRestaurants(fixtures.restaurants, {
-        filterText,
-        filterCategory,
+        text,
+        category,
       });
 
-      expect(filteredRestaurants).toEqual(expectedFilteredRestaurants);
+      expect(filteredRestaurants).toHaveLength(restaurants.length);
+    });
+  });
+
+  context('text = “”, category=”중식” ', () => {
+    it('중식 카테고리의 레스토랑 객체를 배열을 반환한다.', () => {
+      const text = '';
+      const category = '중식';
+
+      const filteredRestaurants = filterRestaurants(fixtures.restaurants, {
+        text,
+        category,
+      });
+
+      expect(filteredRestaurants).toHaveLength(1);
+    });
+  });
+
+  context('text = “”, category=”한식” ', () => {
+    it('한식 카테고리의 레스토랑 객체를 배열을 반환한다.', () => {
+      const text = '';
+      const category = '한식';
+
+      const filteredRestaurants = filterRestaurants(fixtures.restaurants, {
+        text,
+        category,
+      });
+
+      expect(filteredRestaurants).toHaveLength(1);
+    });
+  });
+
+  context('text = “”, category=”일식" ', () => {
+    it('일식 카테고리의 레스토랑 객체를 배열을 반환한다.', () => {
+      const text = '';
+      const category = '일식';
+
+      const filteredRestaurants = filterRestaurants(fixtures.restaurants, {
+        text,
+        category,
+      });
+
+      expect(filteredRestaurants).toHaveLength(1);
+    });
+  });
+
+  context('text = “메”, category="" ', () => {
+    it('‘메’를 포함한 레스토랑 객체를 배열을 반환한다. ', () => {
+      const text = '메';
+      const category = '전체';
+
+      const filteredRestaurants = filterRestaurants(fixtures.restaurants, {
+        text,
+        category,
+      });
+
+      expect(filteredRestaurants).toHaveLength(2);
+      expect(filteredRestaurants[0].name).toBe('메가반점');
+    });
+  });
+
+  context('text = “메”, category="일식" ', () => {
+    it('‘메’를 포함한 일식 카테고리의 레스토랑 객체를  배열을 반환한다.', () => {
+      const text = '메';
+      const category = '일식';
+
+      const filteredRestaurants = filterRestaurants(fixtures.restaurants, {
+        text,
+        category,
+      });
+
+      expect(filteredRestaurants).toHaveLength(0);
     });
   });
 });
